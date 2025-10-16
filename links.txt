@@ -1,1 +1,10 @@
+# ===== Site Meta =====
+@siteTitle = University Links
+@siteSubtitle = Choose your channel
+@makerName = YourName
+@makerUrl = https://your.site
+
+# ===== Links (label | href | icon? | tag?) =====
+گسسته | https://t.me/iwana_to_be | child | New
+
 
