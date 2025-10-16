@@ -1,135 +1,391 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ورود به کانال تلگرام</title>
-  <meta name="description" content="دکمه ورود به کانال تلگرام" />
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Link Center</title>
   <style>
-    :root{
-      --bg:#0f1522; --card:#141b2d; --txt:#e8ecf1; --sub:#9fb0c6;
-      --brand:#2ea6ff; --brand2:#27d2ff; --ok:#19c37d;
+    /* CSS Reset and Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      --accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --text-primary: rgba(255, 255, 255, 0.9);
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border-radius: 18px;
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    html,body{height:100%}
-    body{
-      margin:0; font-family:system-ui,IRANSans,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      background: radial-gradient(1200px 800px at 85% -10%, #1c2a47 0%, #0f1522 60%) no-repeat,
-                  linear-gradient(160deg, #0c1220 0%, #0f1522 100%);
-      color:var(--txt); display:grid; place-items:center; padding:24px;
+
+    @media (prefers-reduced-motion: reduce) {
+      :root { --transition: none; }
     }
-    .card{
-      width:min(520px, 92vw); background:linear-gradient(180deg,#17233d 0%, var(--card) 100%);
-      border:1px solid #1f2c49; border-radius:18px; padding:28px; box-shadow:0 20px 60px rgba(0,0,0,.35);
-      text-align:center; backdrop-filter:saturate(1.2) blur(6px);
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
-    h1{margin:.2rem 0 0.6rem 0; font-size:1.35rem; letter-spacing:.1px}
-    p{margin:.2rem 0 1.2rem 0; color:var(--sub); line-height:1.8}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
-      width:100%; padding:14px 16px; border-radius:12px; border:0; cursor:pointer;
-      color:#06121e; font-weight:700; letter-spacing:.2px; font-size:1rem;
-      background:linear-gradient(90deg, var(--brand) 0%, var(--brand2) 100%);
-      box-shadow:0 8px 24px rgba(46,166,255,.35); transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
+
+    /* Background noise effect */
+    body::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
     }
-    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 28px rgba(46,166,255,.45)}
-    .btn:active{transform:translateY(0)}
-    .btn-outline{
-      background:transparent; color:var(--txt); border:1px solid #2a3a5e;
-      box-shadow:none; margin-top:10px;
+
+    /* Main container */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
     }
-    .btn-outline:hover{filter:brightness(1.15)}
-    .hint{font-size:.88rem; color:#8ea2c4; margin-top:8px}
-    .row{display:grid; grid-template-columns:1fr; gap:10px; margin-top:14px}
-    .logo{
-      width:64px; height:64px; margin:0 auto 8px auto; border-radius:16px;
-      background:
-        radial-gradient(circle at 30% 30%, #ffffff 0 20%, transparent 22%),
-        radial-gradient(circle at 70% 70%, #ffffff 0 20%, transparent 22%),
-        conic-gradient(from 210deg at 50% 50%, #2ea6ff, #27d2ff);
-      filter:drop-shadow(0 6px 18px rgba(46,166,255,.35));
+
+    /* Glass card */
+    .glass-card {
+      width: 100%;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      box-shadow: var(--glass-shadow);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
-    .small{font-size:.85rem}
-    a.clean{color:inherit; text-decoration:none}
-    .hidden{display:none}
-    .qr{margin-top:12px}
-    .qr canvas{width:140px; height:140px}
+
+    @keyframes fadeUp { to { transform: translateY(0); opacity: 1; } }
+
+    /* Logo */
+    .logo {
+      width: 80px; height: 80px; border-radius: 22px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      transform: scale(0.9);
+      animation: scaleIn 0.6s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .logo svg { width: 40px; height: 40px; fill: #fff; }
+    @keyframes scaleIn { to { transform: scale(1); } }
+
+    /* Text content */
+    .content { text-align: center; width: 100%; }
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2rem);
+      font-weight: 700; margin-bottom: 8px;
+      color: var(--text-primary); letter-spacing: -0.02em;
+    }
+    p {
+      font-size: clamp(1rem, 3vw, 1.125rem);
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 320px; margin: 0 auto;
+    }
+
+    /* Buttons container */
+    .buttons {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Individual button */
+    .button {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500; font-size: 1.125rem;
+      transition: var(--transition);
+      cursor: pointer; overflow: hidden;
+      transform: translateY(10px); opacity: 0;
+      animation: buttonAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .button::before {
+      content: "";
+      position: absolute; inset: 0; left: -100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.6s ease;
+    }
+    .button:hover::before { left: 100%; }
+
+    @keyframes buttonAppear { to { transform: translateY(0); opacity: 1; } }
+
+    .button:hover {
+      transform: translateY(-2px) scale(1.02);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .button:active { transform: translateY(0) scale(0.98); transition: all 0.1s ease; }
+
+    .button-content {
+      display: flex; align-items: center; gap: 12px; width: 100%;
+    }
+    .button-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+    .button-icon svg { width: 100%; height: 100%; fill: var(--text-primary); }
+    .button-label { flex: 1; text-align: left; }
+    .button-tag {
+      background: var(--accent); color: #fff;
+      font-size: 0.75rem; font-weight: 600;
+      padding: 4px 8px; border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Maker footer */
+    .maker {
+      margin-top: 20px; font-size: 0.875rem;
+      color: var(--text-tertiary); text-align: center;
+      opacity: 0; animation: fadeIn 0.8s 1s ease forwards;
+    }
+    .maker a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s ease; }
+    .maker a:hover { color: var(--text-primary); }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* Status (load/error) */
+    .status { margin-top: 6px; font-size: 0.85rem; color: var(--text-tertiary); text-align: center; min-height: 1.2em; }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+      .container { max-width: 480px; }
+      .glass-card { padding: 40px 32px; }
+      .button { padding: 18px 24px; }
+    }
+    @media (max-width: 480px) {
+      .glass-card { padding: 24px 20px; }
+      .button { padding: 14px 20px; }
+    }
   </style>
 </head>
 <body>
-  <main class="card" role="main">
-    <div class="logo" aria-hidden="true"></div>
-    <h1>ورود به کانال تلگرام</h1>
-    <p class="small">برای پیوستن به کانال روی دکمه زیر بزنید. اگر اپ تلگرام نصب نباشد، نسخهٔ وب باز می‌شود.</p>
+  <div class="container">
+    <div class="glass-card">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+          <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2Zm9 7V7L15 5.5V7H9V5.5L3 7v2L9 10.5V12L5 13v2l4-1.5V15h6v-1.5l6 1.5v-2l-6-1.5v-1L21 9Z"/>
+        </svg>
+      </div>
 
-    <div class="row">
-      <button id="joinBtn" class="btn" aria-label="ورود به کانال تلگرام">
-        🚀 ورود به کانال
-      </button>
-      <button id="copyBtn" class="btn btn-outline" aria-label="کپی کردن لینک دعوت">
-        📋 کپی لینک دعوت
-      </button>
-      <button id="openWeb" class="btn btn-outline hidden" aria-label="باز کردن نسخهٔ وب تلگرام">
-        🌐 باز کردن در وب
-      </button>
+      <div class="content">
+        <h1 id="title">Link Center</h1>
+        <p id="subtitle">All my links in one place</p>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="buttons" id="buttons-container">
+        <!-- Buttons will be dynamically generated here -->
+      </div>
     </div>
 
-    <p id="msg" class="hint" role="status" aria-live="polite"></p>
-
-    <noscript>
-      <p class="hint">جاوااسکریپت غیرفعال است. برای ورود مستقیم:
-        <a class="clean" href="https://t.me/+BBO8JO4Gy2xhZTE8" rel="noopener" target="_blank">روی این لینک بزنید</a>.
-      </p>
-    </noscript>
-  </main>
+    <div class="maker" id="maker-info">
+      Made by <a href="https://your.site">YourName</a>
+    </div>
+  </div>
 
   <script>
-    // لینک دعوت شما:
-    const INVITE_URL = "https://t.me/+BBO8JO4Gy2xhZTE8";
+    /**********************
+     * CONFIG (editable)
+     **********************/
+    // If links.txt lives next to this HTML, just 'links.txt' is fine.
+    const EXTERNAL_TXT_URL = 'links.txt';
+    // true: only external links; false: merge with local LINKS below
+    const REPLACE_LOCAL_LINKS = true;
 
-    const el = (id)=>document.getElementById(id);
-    const joinBtn = el("joinBtn");
-    const copyBtn = el("copyBtn");
-    const openWeb = el("openWeb");
-    const msg = el("msg");
+    // Local defaults (used if external file fails)
+    const SITE = { title: "Link Center", subtitle: "All my links in one place" };
+    const MAKER = { name: "YourName", url: "https://your.site" };
 
-    // تشخیص سادهٔ موبایل
-    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+    const LINKS = [
+      { label: "Telegram", href: "https://t.me/...", icon: "paper-plane", tag: "Popular" },
+      { label: "GitHub", href: "https://github.com/...", icon: "github", tag: "New" },
+      { label: "Portfolio", href: "https://yourportfolio.com", icon: "globe" }
+    ];
 
-    // ابتدا تلاش برای بازکردن اپ تلگرام؛ در صورت عدم موفقیت، لینک وب را نشان بده
-    joinBtn.addEventListener("click", () => {
-      msg.textContent = "در حال تلاش برای باز کردن تلگرام…";
+    // Minimal inline icons (add more if needed)
+    const ICONS = {
+      "paper-plane":"M2 21L23 12L2 3V10L17 12L2 14V21Z",
+      "github":"M12 0C5.37 0 0 5.37 0 12C0 17.31 3.435 21.795 8.205 23.385C8.805 23.49 9.03 23.13 9.03 22.815C9.03 22.53 9.015 21.585 9.015 20.55C6 21.135 5.22 19.845 4.98 19.17C4.845 18.825 4.26 17.76 3.75 17.475C3.33 17.25 2.73 16.665 3.735 16.65C4.68 16.635 5.355 17.55 5.58 17.91C6.66 19.725 8.385 19.215 9.075 18.9C9.18 18.12 9.495 17.595 9.84 17.295C7.17 16.995 4.38 15.96 4.38 11.37C4.38 10.065 4.845 8.985 5.61 8.145C5.49 7.845 5.07 6.615 5.73 4.965C5.73 4.965 6.735 4.65 9.03 6.195C9.99 5.925 11.01 5.79 12.03 5.79C13.05 5.79 14.07 5.925 15.03 6.195C17.325 4.635 18.33 4.965 18.33 4.965C18.99 6.615 18.57 7.845 18.45 8.145C19.215 8.985 19.68 10.05 19.68 11.37C19.68 15.975 16.875 16.995 14.205 17.295C14.64 17.67 15.015 18.39 15.015 19.515C15.015 21.12 15 22.41 15 22.815C15 23.13 15.225 23.505 15.825 23.385C20.565 21.795 24 17.295 24 12C24 5.37 18.63 0 12 0Z",
+      "twitter":"M22.46 6C21.69 6.35 20.86 6.58 20 6.69C20.88 6.16 21.56 5.32 21.88 4.31C21.05 4.81 20.13 5.16 19.16 5.36C18.37 4.5 17.26 4 16 4C13.65 4 11.73 5.92 11.73 8.29C11.73 8.63 11.77 8.96 11.84 9.27C8.28 9.09 5.11 7.38 3 4.79C2.63 5.42 2.42 6.16 2.42 6.94C2.42 8.43 3.17 9.75 4.33 10.5C3.62 10.5 2.96 10.3 2.38 10V10.03C2.38 12.11 3.86 13.85 5.82 14.24C5.19 14.4 4.53 14.42 3.89 14.31C4.16 15.16 4.69 15.88 5.37 16.4C6.05 16.92 6.86 17.21 7.69 17.22C6.11 18.49 4.12 19.13 2.04 19.13C1.7 19.13 1.36 19.11 1.02 19.07C3.01 20.29 5.35 21 7.78 21C16 21 20.33 14.46 20.33 8.79C20.33 8.6 20.33 8.42 20.32 8.23C21.16 7.63 21.88 6.87 22.46 6Z",
+      "linkedin":"M19 0H5C2.24 0 0 2.24 0 5V19C0 21.76 2.24 24 5 24H19C21.76 24 24 21.76 24 19V5C24 2.24 21.76 0 19 0ZM8 19H5V8H8V19ZM6.5 6.73C5.53 6.73 4.75 5.96 4.75 5C4.75 4.04 5.53 3.27 6.5 3.27C7.47 3.27 8.25 4.04 8.25 5C8.25 5.96 7.47 6.73 6.5 6.73ZM20 19H17V13.4C17 11.28 15.57 10.01 13.98 10.01C12.39 10.01 11 11.28 11 13.4V19H8V8H11V9.56C11.66 8.7 13.08 7.75 14.75 7.75C17.78 7.75 20 9.98 20 13.4V19Z",
+      "globe":"M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 19.93C7.05 19.44 4 16.08 4 12C4 11.38 4.08 10.79 4.21 10.21L9 15V16C9 17.1 9.9 18 11 18V19.93ZM17.9 17.39C17.64 16.58 16.9 16 16 16H15V13C15 12.45 14.55 12 14 12H8V10H10C10.55 10 11 9.55 11 9V7H13C14.1 7 15 6.1 15 5V4.59C17.93 5.78 20 8.65 20 12C20 14.08 19.2 15.97 17.9 17.39Z",
+      "envelope":"M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
+    };
 
-      // تلاش اپ (deep link). برای لینک‌های دعوت بهتر است همان https استفاده شود
-      // چون tg:// برای invite مخصوص همیشه کار نمی‌کند. پس مستقیم به https می‌رویم.
-      const w = window.open(INVITE_URL, "_blank", "noopener");
-      if (!w) {
-        // اگر پاپ‌آپ بلاک شد
-        window.location.href = INVITE_URL;
-      } else {
-        msg.textContent = "اگر تلگرام باز نشد، از دکمهٔ «باز کردن در وب» استفاده کنید.";
-        openWeb.classList.remove("hidden");
+    /**********************
+     * Helpers
+     **********************/
+    function setStatus(text) {
+      const s = document.getElementById('status');
+      s.textContent = text || '';
+    }
+
+    function clearButtons() {
+      const c = document.getElementById('buttons-container');
+      while (c.firstChild) c.removeChild(c.firstChild);
+    }
+
+    function createButton({ label, href, icon, tag }, index) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.className = 'button';
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.style.animationDelay = `${0.3 + index * 0.08}s`;
+
+      const wrap = document.createElement('div');
+      wrap.className = 'button-content';
+
+      const ic = document.createElement('div');
+      ic.className = 'button-icon';
+      ic.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${ICONS[icon] || ICONS['globe']}"></path></svg>`;
+
+      const lbl = document.createElement('div');
+      lbl.className = 'button-label';
+      lbl.textContent = label;
+
+      wrap.appendChild(ic);
+      wrap.appendChild(lbl);
+
+      if (tag) {
+        const tg = document.createElement('div');
+        tg.className = 'button-tag';
+        tg.textContent = tag;
+        wrap.appendChild(tg);
       }
-    });
 
-    copyBtn.addEventListener("click", async () => {
+      a.appendChild(wrap);
+      return a;
+    }
+
+    function renderButtons(linkArray) {
+      const c = document.getElementById('buttons-container');
+      clearButtons();
+      linkArray.forEach((lnk, i) => c.appendChild(createButton(lnk, i)));
+    }
+
+    function applySiteMeta(meta) {
+      if (meta.siteTitle) document.getElementById('title').textContent = meta.siteTitle;
+      if (meta.siteSubtitle) document.getElementById('subtitle').textContent = meta.siteSubtitle;
+      if (meta.makerName || meta.makerUrl) {
+        const mk = document.getElementById('maker-info');
+        const name = meta.makerName || MAKER.name;
+        const url = meta.makerUrl || MAKER.url;
+        mk.innerHTML = `Made by <a href="${url}" rel="noopener" target="_blank">${name}</a>`;
+      }
+    }
+
+    /**********************
+     * Parser for links.txt
+     * Format:
+     *  # comment
+     *  @siteTitle=Link Center
+     *  @siteSubtitle=Pick your group
+     *  @makerName=YourName
+     *  @makerUrl=https://your.site
+     *
+     *  Kindergarten | https://t.me/abc | child | New
+     *  Advanced Programming | https://t.me/xyz | code
+     *  Mathematics | https://t.me/math
+     **********************/
+    function parseLinksTxt(raw) {
+      const lines = raw.split(/\r?\n/);
+      const meta = {};
+      const items = [];
+
+      for (let rawLine of lines) {
+        const line = rawLine.trim();
+        if (!line || line.startsWith('#')) continue;
+
+        if (line.startsWith('@')) {
+          const eq = line.indexOf('=');
+          if (eq > 1) {
+            const key = line.slice(1, eq).trim();
+            const val = line.slice(eq + 1).trim();
+            if (key && val) {
+              if (key === 'siteTitle') meta.siteTitle = val;
+              else if (key === 'siteSubtitle') meta.siteSubtitle = val;
+              else if (key === 'makerName') meta.makerName = val;
+              else if (key === 'makerUrl') meta.makerUrl = val;
+            }
+          }
+          continue;
+        }
+
+        const parts = line.split('|').map(s => s.trim()).filter(Boolean);
+        if (parts.length >= 2) {
+          const [label, href, icon, tag] = parts;
+          items.push({ label, href, icon, tag });
+        }
+      }
+
+      return { meta, items };
+    }
+
+    async function loadExternalTxt(url) {
+      setStatus('Loading links…');
       try {
-        await navigator.clipboard.writeText(INVITE_URL);
-        msg.textContent = "لینک دعوت کپی شد ✅";
-      } catch {
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = INVITE_URL; document.body.appendChild(ta);
-        ta.select(); document.execCommand("copy"); ta.remove();
-        msg.textContent = "لینک کپی شد ✅";
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const txt = await res.text();
+        const { meta, items } = parseLinksTxt(txt);
+
+        applySiteMeta(meta);
+
+        const finalLinks = REPLACE_LOCAL_LINKS ? items : [...LINKS, ...items];
+        renderButtons(finalLinks);
+        setStatus('');
+      } catch (err) {
+        console.warn('External links load failed:', err);
+        setStatus('Could not load external links. Using local defaults.');
+        renderButtons(LINKS);
       }
-    });
+    }
 
-    openWeb.addEventListener("click", () => {
-      window.open(INVITE_URL, "_blank", "noopener");
-    });
+    /**********************
+     * INIT
+     **********************/
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initial local meta (in case external file fails)
+      document.getElementById('title').textContent = SITE.title;
+      document.getElementById('subtitle').textContent = SITE.subtitle;
+      document.getElementById('maker-info').innerHTML =
+        `Made by <a href="${MAKER.url}" rel="noopener" target="_blank">${MAKER.name}</a>`;
 
-    // اگر کاربر iOS باشد و سافاری پاپ‌آپ را بلاک کند، دکمه وب را نشان بده
-    if (!isMobile) openWeb.classList.remove("hidden");
+      // Load external links
+      loadExternalTxt(EXTERNAL_TXT_URL);
+    });
   </script>
 </body>
 </html>
