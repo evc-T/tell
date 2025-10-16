@@ -1,8 +1,8 @@
 # ===== Site Meta =====
-@siteTitle = University Links
+@siteTitle = Tell Links
 @siteSubtitle = Choose your channel
-@makerName = YourName
-@makerUrl = https://your.site
+@makerName = amir
+@makerUrl = https://www.instagram.com/amir.hmn_?igsh=N3VneTF0NHN5dGlo
 
 # ===== Links (label | href | icon? | tag?) =====
 گسسته | https://t.me/iwana_to_be | child | New
