@@ -1,13 +1,13 @@
 @siteTitle=Links
 @siteSubtitle=
-@background_image=./pattern.jpg
+@background_image=
 @dark_text_primary=#ffffff
 @dark_text_secondary=#cccccc
 @light_text_primary=#d4d2d2
 @light_text_secondary=#666
-@logo_image=
-@makerName=YourName
-@makerUrl=https://your.site
+@logo_image=./logo.png
+@makerName=AM!R
+@makerUrl=https://www.instagram.com/amir.hmn_?igsh=N3VneTF0NHN5dGlo
 @external_txt_file=links.txt
 
 Telegram | https://t.me/username | paper-plane | Popular
