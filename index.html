@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +21,15 @@
       --site-title: "Link Center";
       --site-subtitle: "";
       --maker-name: "AM!R";
-      --maker-url: "https://t.me/iwana_to_be";
-      --background-image: none; /* e.g., url('https://example.com/bg.jpg') */
+      --maker-url: "  https://t.me/iwana_to_be  ";
+      --background-image: none; /* e.g., url('https://example.com/bg.jpg  ') */
       --background-color: #f0f0f0;
       --text-primary: #224;
       --text-secondary: #666666;
+
+      /* Background Pattern Density (0 to 1) - Edit these to adjust pattern */
+      --pattern-density-dark: 0.1; /* Density for dark mode pattern */
+      --pattern-density-light: 0.05; /* Density for light mode pattern */
     }
 
     /* Light Theme (Default) */
@@ -41,6 +46,11 @@
       --border-radius: 18px;
       --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       --accent: var(--c-action);
+      /* Default light mode text colors */
+      --text-primary: #ffffff; /* White for primary text */
+      --text-secondary: #e0e0e0; /* Light grey for secondary text */
+      --bg-pattern-color: #000000; /* Black pattern for light mode */
+      --bg-pattern-opacity: var(--pattern-density-light);
     }
 
     /* Dark Theme */
@@ -54,8 +64,10 @@
       --glass-reflex-dark: 2;
       --glass-reflex-light: 0.3;
       --saturation: 150%;
-      --text-primary: #ffffff;
-      --text-secondary: #cccccc;
+      --text-primary: #ffffff; /* White for primary text */
+      --text-secondary: #cccccc; /* Light grey for secondary text */
+      --bg-pattern-color: #ffffff; /* White pattern for dark mode */
+      --bg-pattern-opacity: var(--pattern-density-dark);
     }
 
     /* Base body styles */
@@ -73,24 +85,35 @@
       padding: 20px;
       transition: background 400ms cubic-bezier(1, 0, 0.4, 1),
         color 400ms cubic-bezier(1, 0, 0.4, 1);
-      background-image: var(--background-image);
+      background-image: var(--background-image), 
+                        radial-gradient(circle at 10% 20%, 
+                                         rgba(var(--bg-pattern-color-rgb), var(--bg-pattern-opacity)) 0.5%, 
+                                         transparent 1.2%);
       background-repeat: repeat;
       background-position: top left;
-      background-size: 500px; /* Made pattern smaller */
+      background-size: 500px, 100px; /* Original pattern, then new radial pattern */
     }
 
-    /* Theme switcher styles */
+    /* Define RGB values for the pattern color */
+    body:not(.dark-theme) {
+      --bg-pattern-color-rgb: 0, 0, 0; /* Black */
+    }
+
+    body.dark-theme {
+      --bg-pattern-color-rgb: 255, 255, 255; /* White */
+    }
+
+    /* Theme switcher styles - Positioned absolutely at top right */
     .theme-switcher {
-      position: fixed;
-      z-index: 100;
-      top: 20px;
-      right: 20px;
+      position: absolute; /* Position absolutely within the card */
+      top: 12px; /* Adjusted for alignment with logo */
+      right: 12px; /* Adjusted for alignment with logo */
       display: flex;
-      flex-direction: column;
+      flex-direction: column; /* Stack vertically */
       align-items: center;
       gap: 8px;
-      width: 50px;
-      padding: 8px;
+      width: auto; /* Let it size based on content */
+      padding: 8px; /* Reduced padding */
       border: none;
       border-radius: 99em;
       background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
@@ -158,6 +181,7 @@
           );
       transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1),
         box-shadow 400ms cubic-bezier(1, 0, 0.4, 1);
+      z-index: 10; /* Ensure it's above other content */
     }
 
     .theme-switcher__legend {
@@ -194,18 +218,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 8px;
-      width: 36px;
-      height: 36px;
+      padding: 6px; /* Reduced padding */
+      width: 32px; /* Smaller size */
+      height: 32px; /* Smaller size */
       box-sizing: border-box;
       border-radius: 99em;
-      opacity: 1;
+      opacity: 0.6; /* Default opacity for unselected */
       transition: all 160ms;
     }
 
     .theme-switcher__option:hover {
       --c: var(--c-action);
       cursor: pointer;
+      opacity: 1; /* Full opacity on hover */
     }
 
     .theme-switcher__option:hover .theme-switcher__icon {
@@ -213,13 +238,16 @@
     }
 
     .theme-switcher__option:has(input:checked) {
-      --c: var(--c-content);
+      --c: var(--c-action); /* Use action color for selected */
       cursor: auto;
+      opacity: 1; /* Full opacity for selected */
+      background-color: color-mix(in srgb, var(--c-glass) 20%, transparent); /* Add background to selected */
     }
 
     .theme-switcher__option:has(input:checked) .theme-switcher__icon {
       scale: 1;
     }
+
 
     /* Main container */
     .container {
@@ -230,6 +258,7 @@
       flex-direction: column;
       align-items: center;
       gap: 24px;
+      position: relative; /* Needed for absolute positioning of theme switcher */
     }
 
     /* Liquid Glass Card */
@@ -318,8 +347,10 @@
 
     /* Logo */
     .logo {
-      width: 80px;
-      height: 80px;
+      width: 80px; /* Fixed width */
+      height: 80px; /* Fixed height */
+      max-width: 80px; /* Ensure it doesn't grow */
+      max-height: 80px; /* Ensure it doesn't grow */
       border-radius: 22px;
       background: color-mix(in srgb, var(--c-action) 80%, transparent);
       display: flex;
@@ -330,6 +361,15 @@
       transform: scale(0.9);
       animation: scaleIn 0.6s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)
         forwards;
+      position: relative; /* Needed to position below theme switcher */
+      z-index: 1; /* Ensure logo is below the switcher */
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Cover the container without distortion */
+      border-radius: inherit; /* Match the container's border radius */
     }
 
     .logo svg {
@@ -348,6 +388,8 @@
     .content {
       text-align: center;
       width: 100%;
+      position: relative; /* Needed for z-index */
+      z-index: 1; /* Ensure content is below switcher */
     }
 
     h1 {
@@ -372,6 +414,8 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
+      position: relative; /* Needed for z-index */
+      z-index: 1; /* Ensure buttons are below switcher */
     }
 
     /* Individual button */
@@ -606,6 +650,8 @@
       text-align: center;
       opacity: 0;
       animation: fadeIn 0.8s 1s ease forwards;
+      position: relative; /* Needed for z-index */
+      z-index: 1; /* Ensure maker info is below switcher */
     }
 
     .maker a {
@@ -665,43 +711,40 @@
         grid-column: span 1;
       }
 
-      /* Mobile theme switcher position */
+      /* Mobile theme switcher position - Keep it inside the card */
       .theme-switcher {
-        top: 15px;
-        right: 15px;
-        width: 45px;
-        padding: 6px;
-      }
-
-      .theme-switcher__option {
-        width: 32px;
-        height: 32px;
-        padding: 6px;
+        position: static; /* Reset absolute positioning */
+        align-self: flex-end; /* Align switcher to the right within the card */
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px; /* Add space below the switcher */
+        margin-top: 10px; /* Add space above the switcher from the logo */
       }
     }
   </style>
 </head>
 <body class="dark-theme">
-  <!-- Theme Switcher -->
-  <fieldset class="theme-switcher">
-    <legend class="theme-switcher__legend">Choose theme</legend>
-    <label class="theme-switcher__option">
-      <input class="theme-switcher__input" type="radio" name="theme" value="light" checked />
-      <svg class="theme-switcher__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
-        <path fill="var(--c)" fill-rule="evenodd" d="M18 12a6 6 0 1 1 0 12 6 6 0 0 1 0-12Zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" clip-rule="evenodd" />
-        <path fill="var(--c)" d="M17 6.038a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0v-3ZM24.244 7.742a1 1 0 1 1 1.618 1.176L24.1 11.345a1 1 0 1 1-1.618-1.176l1.763-2.427ZM29.104 13.379a1 1 0 0 1 .618 1.902l-2.854.927a1 1 0 1 1-.618-1.902l2.854-.927ZM29.722 20.795a1 1 0 0 1-.619 1.902l-2.853-.927a1 1 0 1 1 .618-1.902l2.854.927ZM25.862 27.159a1 1 0 0 1-1.618 1.175l-1.763-2.427a1 1 0 1 1 1.618-1.175l1.763 2.427ZM19 30.038a1 1 0 0 1-2 0v-3a1 1 0 1 1 2 0v3ZM11.755 28.334a1 1 0 0 1-1.618-1.175l1.764-2.427a1 1 0 1 1 1.618 1.175l-1.764 2.427ZM6.896 22.697a1 1 0 1 1-.618-1.902l2.853-.927a1 1 0 1 1 .618 1.902l-2.853.927ZM6.278 15.28a1 1 0 1 1 .618-1.901l2.853.927a1 1 0 1 1-.618 1.902l-2.853-.927ZM10.137 8.918a1 1 0 0 1 1.618-1.176l1.764 2.427a1 1 0 0 1-1.618 1.176l-1.764-2.427Z" />
-      </svg>
-    </label>
-    <label class="theme-switcher__option">
-      <input class="theme-switcher__input" type="radio" name="theme" value="dark" />
-      <svg class="theme-switcher__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
-        <path fill="var(--c)" d="M12.5 8.473a10.968 10.968 0 0 1 8.785-.97 7.435 7.435 0 0 0-3.737 4.672l-.09.373A7.454 7.454 0 0 0 28.732 20.4a10.97 10.97 0 0 1-5.232 7.125l-.497.27c-5.014 2.566-11.175.916-14.234-3.813l-.295-.483C5.53 18.403 7.13 11.93 12.017 8.77l.483-.297Zm4.234.616a8.946 8.946 0 0 0-2.805.883l-.429.234A9 9 0 0 0 10.206 22.5l.241.395A9 9 0 0 0 22.5 25.794l.416-.255a8.94 8.94 0 0 0 2.167-1.99 9.433 9.433 0 0 1-2.782-.313c-5.043-1.352-8.036-6.535-6.686-11.578l.147-.491c.242-.745.573-1.44.972-2.078Z" />
-      </svg>
-    </label>
-  </fieldset>
-
   <div class="container">
     <div class="glass-card">
+      <!-- Theme Switcher positioned absolutely at top right -->
+      <fieldset class="theme-switcher">
+        <legend class="theme-switcher__legend">Choose theme</legend>
+        <label class="theme-switcher__option">
+          <input class="theme-switcher__input" type="radio" name="theme" value="light" />
+          <svg class="theme-switcher__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
+            <path fill="var(--c)" fill-rule="evenodd" d="M18 12a6 6 0 1 1 0 12 6 6 0 0 1 0-12Zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" clip-rule="evenodd" />
+            <path fill="var(--c)" d="M17 6.038a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0v-3ZM24.244 7.742a1 1 0 1 1 1.618 1.176L24.1 11.345a1 1 0 1 1-1.618-1.176l1.763-2.427ZM29.104 13.379a1 1 0 0 1 .618 1.902l-2.854.927a1 1 0 1 1-.618-1.902l2.854-.927ZM29.722 20.795a1 1 0 0 1-.619 1.902l-2.853-.927a1 1 0 1 1 .618-1.902l2.854.927ZM25.862 27.159a1 1 0 0 1-1.618 1.175l-1.763-2.427a1 1 0 1 1 1.618-1.175l1.763 2.427ZM19 30.038a1 1 0 0 1-2 0v-3a1 1 0 1 1 2 0v3ZM11.755 28.334a1 1 0 0 1-1.618-1.175l1.764-2.427a1 1 0 1 1 1.618 1.175l-1.764 2.427ZM6.896 22.697a1 1 0 1 1-.618-1.902l2.853-.927a1 1 0 1 1 .618 1.902l-2.853.927ZM6.278 15.28a1 1 0 1 1 .618-1.901l2.853.927a1 1 0 1 1-.618 1.902l-2.853-.927ZM10.137 8.918a1 1 0 0 1 1.618-1.176l1.764 2.427a1 1 0 0 1-1.618 1.176l-1.764-2.427Z" />
+          </svg>
+        </label>
+        <label class="theme-switcher__option">
+          <input class="theme-switcher__input" type="radio" name="theme" value="dark" checked />
+          <svg class="theme-switcher__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
+            <path fill="var(--c)" d="M12.5 8.473a10.968 10.968 0 0 1 8.785-.97 7.435 7.435 0 0 0-3.737 4.672l-.09.373A7.454 7.454 0 0 0 28.732 20.4a10.97 10.97 0 0 1-5.232 7.125l-.497.27c-5.014 2.566-11.175.916-14.234-3.813l-.295-.483C5.53 18.403 7.13 11.93 12.017 8.77l.483-.297Zm4.234.616a8.946 8.946 0 0 0-2.805.883l-.429.234A9 9 0 0 0 10.206 22.5l.241.395A9 9 0 0 0 22.5 25.794l.416-.255a8.94 8.94 0 0 0 2.167-1.99 9.433 9.433 0 0 1-2.782-.313c-5.043-1.352-8.036-6.535-6.686-11.578l.147-.491c.242-.745.573-1.44.972-2.078Z" />
+          </svg>
+        </label>
+      </fieldset>
+
       <div class="logo" aria-hidden="true">
        <img src="./logo.png" alt="404">
       </div>
@@ -718,7 +761,7 @@
     </div>
 
     <div class="maker" id="maker-info">
-      Made by <a href="https://your.site">YourName</a>
+      Made by <a href="https://your.site  ">YourName</a>
     </div>
   </div>
 
@@ -739,13 +782,13 @@
     
     const MAKER = { 
       name: "YourName", 
-      url: "https://your.site" 
+      url: "https://your.site  " 
     };
 
     const LINKS = [
-      { label: "Telegram", href: "https://t.me/...", icon: "paper-plane", tag: "Popular" },
-      { label: "GitHub", href: "https://github.com/...", icon: "github", tag: "New" },
-      { label: "Portfolio", href: "https://yourportfolio.com", icon: "globe" }
+      { label: "Telegram", href: "https://t.me/...  ", icon: "paper-plane", tag: "Popular" },
+      { label: "GitHub", href: "https://github.com/...  ", icon: "github", tag: "New" },
+      { label: "Portfolio", href: "https://yourportfolio.com  ", icon: "globe" }
     ];
 
     // Minimal inline icons (add more if needed)
@@ -836,11 +879,11 @@
      *  @siteTitle=Link Center
      *  @siteSubtitle=Pick your group
      *  @makerName=YourName
-     *  @makerUrl=https://your.site
+     *  @makerUrl=https://your.site  
      *
-     *  Kindergarten | https://t.me/abc | child | New
-     *  Advanced Programming | https://t.me/xyz | code
-     *  Mathematics | https://t.me/math
+     *  Kindergarten | https://t.me/abc   | child | New
+     *  Advanced Programming | https://t.me/xyz   | code
+     *  Mathematics | https://t.me/math  
      **********************/
     function parseLinksTxt(raw) {
       const lines = raw.split(/\r?\n/);
@@ -946,8 +989,7 @@
      **********************/
     document.addEventListener('DOMContentLoaded', function() {
       // Theme switcher functionality
-      const themeSwitcher = document.querySelector('.theme-switcher');
-      const radios = themeSwitcher.querySelectorAll('input[type="radio"]');
+      const radios = document.querySelectorAll('input[name="theme"]');
 
       radios.forEach(radio => {
         radio.addEventListener('change', function() {
