@@ -10,9 +10,4 @@
 @makerUrl=https://www.instagram.com/amir.hmn_?igsh=N3VneTF0NHN5dGlo
 @external_txt_file=links.txt
 
-Telegram | https://t.me/username | paper-plane | Popular
-GitHub | https://github.com/username | github | New
-Twitter | https://twitter.com/username | twitter
-LinkedIn | https://linkedin.com/in/username | linkedin
-Portfolio | https://myportfolio.com | globe
-Email | mailto:email@example.com | envelope
+گسسته | https://t.me/+6D2IHn2c0V1lYWJk | paper-plane | new
