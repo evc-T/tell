@@ -1,10 +1,18 @@
-# ===== Site Meta =====
-@siteTitle = Tell Links
-@siteSubtitle = Choose your channel
-@makerName = amir
-@makerUrl = https://www.instagram.com/amir.hmn_?igsh=N3VneTF0NHN5dGlo
+@siteTitle=My Links
+@siteSubtitle=Check out my social profiles
+@background_image=./pattern.jpg
+@dark_text_primary=#ffffff
+@dark_text_secondary=#cccccc
+@light_text_primary=#224
+@light_text_secondary=#666
+@logo_image=
+@makerName=YourName
+@makerUrl=https://your.site
+@external_txt_file=links.txt
 
-# ===== Links (label | href | icon? | tag?) =====
-گسسته | https://t.me/iwana_to_be | child | New
-
-
+Telegram | https://t.me/username | paper-plane | Popular
+GitHub | https://github.com/username | github | New
+Twitter | https://twitter.com/username | twitter
+LinkedIn | https://linkedin.com/in/username | linkedin
+Portfolio | https://myportfolio.com | globe
+Email | mailto:email@example.com | envelope
