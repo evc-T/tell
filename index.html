@@ -2,59 +2,229 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Link Center</title>
   <style>
-    /* CSS Reset and Base Styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Import DM Sans font */
+    @import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap");
 
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Configuration variables - Edit these to customize */
     :root {
-      --primary-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      --accent: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --text-primary: rgba(255, 255, 255, 0.9);
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --site-title: "Link Center";
+      --site-subtitle: "All my links in one place";
+      --maker-name: "YourName";
+      --maker-url: "https://your.site";
+      --background-image: url(./pattern.jpg); /* e.g., url('https://example.com/bg.jpg') */
+      --background-color: #f0f0f0;
+      --text-primary: #224;
+      --text-secondary: #666666;
+    }
+
+    /* Light Theme (Default) */
+    :root {
+      --c-glass: #bbbbbc;
+      --c-light: #fff;
+      --c-dark: #000;
+      --c-content: #224;
+      --c-action: #0052f5;
+      --c-bg: var(--background-color);
+      --glass-reflex-dark: 1;
+      --glass-reflex-light: 1;
+      --saturation: 150%;
       --border-radius: 18px;
       --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --accent: var(--c-action);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      :root { --transition: none; }
+    /* Dark Theme */
+    body.dark-theme {
+      --c-glass: #bbbbbc;
+      --c-light: #fff;
+      --c-dark: #000;
+      --c-content: #e1e1e1;
+      --c-action: #4d9eff;
+      --c-bg: #121212;
+      --glass-reflex-dark: 2;
+      --glass-reflex-light: 0.3;
+      --saturation: 150%;
+      --text-primary: #ffffff;
+      --text-secondary: #cccccc;
     }
 
+    /* Base body styles */
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--primary-bg);
-      color: var(--text-primary);
+      font-size: 20px;
+      font-family: "DM Sans", sans-serif;
+      font-optical-sizing: auto;
+      background: var(--c-bg);
+      color: var(--c-content);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      position: relative;
-      overflow-x: hidden;
+      transition: background 400ms cubic-bezier(1, 0, 0.4, 1),
+        color 400ms cubic-bezier(1, 0, 0.4, 1);
+      background-image: var(--background-image);
+      background-repeat: repeat;
+      background-position: top left;
+      background-size: 100px; /* Made pattern smaller */
     }
 
-    /* Background noise effect */
-    body::before {
-      content: "";
-      position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: -1;
+    /* Theme switcher styles */
+    .theme-switcher {
+      position: fixed;
+      z-index: 100;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 50px;
+      padding: 8px;
+      border: none;
+      border-radius: 99em;
+      background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+      backdrop-filter: blur(8px) saturate(var(--saturation));
+      -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+      box-shadow: inset 0 0 0 1px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 10%),
+            transparent
+          ),
+        inset 1.8px 3px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 90%),
+            transparent
+          ),
+        inset -2px -2px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 80%),
+            transparent
+          ),
+        inset -3px -8px 1px -6px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 60%),
+            transparent
+          ),
+        inset -0.3px -1px 4px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 12%),
+            transparent
+          ),
+        inset -1.5px 2.5px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 20%),
+            transparent
+          ),
+        inset 0px 3px 4px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 20%),
+            transparent
+          ),
+        inset 2px -6.5px 1px -4px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 10%),
+            transparent
+          ),
+        0px 1px 5px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 10%),
+            transparent
+          ),
+        0px 6px 16px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 8%),
+            transparent
+          );
+      transition: background-color 400ms cubic-bezier(1, 0, 0.4, 1),
+        box-shadow 400ms cubic-bezier(1, 0, 0.4, 1);
+    }
+
+    .theme-switcher__legend {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      border: 0;
+      padding: 0;
+      white-space: nowrap;
+      clip-path: inset(100%);
+      clip: rect(0 0 0 0);
+      overflow: hidden;
+    }
+
+    .theme-switcher__input {
+      clip: rect(0 0 0 0);
+      clip-path: inset(100%);
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    .theme-switcher__icon {
+      display: block;
+      width: 100%;
+      transition: scale 200ms cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .theme-switcher__option {
+      --c: var(--c-content);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      width: 36px;
+      height: 36px;
+      box-sizing: border-box;
+      border-radius: 99em;
+      opacity: 1;
+      transition: all 160ms;
+    }
+
+    .theme-switcher__option:hover {
+      --c: var(--c-action);
+      cursor: pointer;
+    }
+
+    .theme-switcher__option:hover .theme-switcher__icon {
+      scale: 1.2;
+    }
+
+    .theme-switcher__option:has(input:checked) {
+      --c: var(--c-content);
+      cursor: auto;
+    }
+
+    .theme-switcher__option:has(input:checked) .theme-switcher__icon {
+      scale: 1;
     }
 
     /* Main container */
     .container {
       width: 100%;
-      max-width: 420px;
+      max-width: 800px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -62,139 +232,479 @@
       gap: 24px;
     }
 
-    /* Glass card */
+    /* Liquid Glass Card */
     .glass-card {
       width: 100%;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
+      background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+      backdrop-filter: blur(25px) saturate(var(--saturation));
+      -webkit-backdrop-filter: blur(25px) saturate(var(--saturation));
       border-radius: var(--border-radius);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      box-shadow: var(--glass-shadow);
       padding: 32px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 24px;
+      box-shadow: inset 0 0 0 1px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 10%),
+            transparent
+          ),
+        inset 1.8px 3px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 90%),
+            transparent
+          ),
+        inset -2px -2px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 80%),
+            transparent
+          ),
+        inset -3px -8px 1px -6px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 60%),
+            transparent
+          ),
+        inset -0.3px -1px 4px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 12%),
+            transparent
+          ),
+        inset -1.5px 2.5px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 20%),
+            transparent
+          ),
+        inset 0px 3px 4px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 20%),
+            transparent
+          ),
+        inset 2px -6.5px 1px -4px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 10%),
+            transparent
+          ),
+        0px 1px 5px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 10%),
+            transparent
+          ),
+        0px 6px 16px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 8%),
+            transparent
+          );
       transform: translateY(20px);
       opacity: 0;
       animation: fadeUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    @keyframes fadeUp { to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
     /* Logo */
     .logo {
-      width: 80px; height: 80px; border-radius: 22px;
-      background: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      width: 80px;
+      height: 80px;
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--c-action) 80%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px
+        color-mix(in srgb, var(--c-action) 30%, transparent);
       transform: scale(0.9);
-      animation: scaleIn 0.6s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: scaleIn 0.6s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+        forwards;
     }
-    .logo svg { width: 40px; height: 40px; fill: #fff; }
-    @keyframes scaleIn { to { transform: scale(1); } }
+
+    .logo svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--c-light);
+    }
+
+    @keyframes scaleIn {
+      to {
+        transform: scale(1);
+      }
+    }
 
     /* Text content */
-    .content { text-align: center; width: 100%; }
+    .content {
+      text-align: center;
+      width: 100%;
+    }
+
     h1 {
       font-size: clamp(1.75rem, 5vw, 2rem);
-      font-weight: 700; margin-bottom: 8px;
-      color: var(--text-primary); letter-spacing: -0.02em;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
     }
+
     p {
       font-size: clamp(1rem, 3vw, 1.125rem);
       color: var(--text-secondary);
       line-height: 1.5;
-      max-width: 320px; margin: 0 auto;
+      max-width: 320px;
+      margin: 0 auto;
     }
 
-    /* Buttons container */
+    /* Buttons container - Grid layout */
     .buttons {
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
 
     /* Individual button */
     .button {
       position: relative;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 16px 24px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: color-mix(in srgb, var(--c-glass) 8%, transparent);
+      backdrop-filter: blur(8px) saturate(var(--saturation));
+      -webkit-backdrop-filter: blur(8px) saturate(var(--saturation));
+      border: none;
       border-radius: 14px;
       color: var(--text-primary);
       text-decoration: none;
-      font-weight: 500; font-size: 1.125rem;
+      font-weight: 500;
+      font-size: 1.125rem;
       transition: var(--transition);
-      cursor: pointer; overflow: hidden;
-      transform: translateY(10px); opacity: 0;
-      animation: buttonAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      cursor: pointer;
+      overflow: hidden;
+      transform: translateY(10px);
+      opacity: 0;
+      animation: buttonAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+        forwards;
+      box-shadow: inset 0 0 0 1px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 10%),
+            transparent
+          ),
+        inset 1.8px 3px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 90%),
+            transparent
+          ),
+        inset -2px -2px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 80%),
+            transparent
+          ),
+        inset -3px -8px 1px -6px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 60%),
+            transparent
+          ),
+        inset -0.3px -1px 4px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 12%),
+            transparent
+          ),
+        inset -1.5px 2.5px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 20%),
+            transparent
+          ),
+        inset 0px 3px 4px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 20%),
+            transparent
+          ),
+        inset 2px -6.5px 1px -4px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 10%),
+            transparent
+          ),
+        0px 1px 5px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 10%),
+            transparent
+          ),
+        0px 6px 16px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 8%),
+            transparent
+          );
+      min-height: 80px;
     }
+
+    /* Full width button for odd number of links */
+    .button.full-width {
+      grid-column: span 2;
+    }
+
     .button::before {
       content: "";
-      position: absolute; inset: 0; left: -100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--c-light) 10%, transparent),
+        transparent
+      );
       transition: left 0.6s ease;
     }
-    .button:hover::before { left: 100%; }
 
-    @keyframes buttonAppear { to { transform: translateY(0); opacity: 1; } }
+    .button:hover::before {
+      left: 100%;
+    }
+
+    @keyframes buttonAppear {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
     .button:hover {
       transform: translateY(-2px) scale(1.02);
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background-color: color-mix(in srgb, var(--c-glass) 16%, transparent);
+      box-shadow: inset 0 0 0 1px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 15%),
+            transparent
+          ),
+        inset 1.8px 3px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 95%),
+            transparent
+          ),
+        inset -2px -2px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 85%),
+            transparent
+          ),
+        inset -3px -8px 1px -6px
+          color-mix(
+            in srgb,
+            var(--c-light) calc(var(--glass-reflex-light) * 65%),
+            transparent
+          ),
+        inset -0.3px -1px 4px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 15%),
+            transparent
+          ),
+        inset -1.5px 2.5px 0px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 25%),
+            transparent
+          ),
+        inset 0px 3px 4px -2px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 25%),
+            transparent
+          ),
+        inset 2px -6.5px 1px -4px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 15%),
+            transparent
+          ),
+        0px 1px 5px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 15%),
+            transparent
+          ),
+        0px 6px 16px 0px
+          color-mix(
+            in srgb,
+            var(--c-dark) calc(var(--glass-reflex-dark) * 12%),
+            transparent
+          );
     }
-    .button:active { transform: translateY(0) scale(0.98); transition: all 0.1s ease; }
+
+    .button:active {
+      transform: translateY(0) scale(0.98);
+      transition: all 0.1s ease;
+    }
 
     .button-content {
-      display: flex; align-items: center; gap: 12px; width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
     }
-    .button-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
-    .button-icon svg { width: 100%; height: 100%; fill: var(--text-primary); }
-    .button-label { flex: 1; text-align: left; }
+
+    .button-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--text-primary);
+    }
+
+    .button-label {
+      flex: 1;
+      text-align: left;
+    }
+
     .button-tag {
-      background: var(--accent); color: #fff;
-      font-size: 0.75rem; font-weight: 600;
-      padding: 4px 8px; border-radius: 6px;
+      background: color-mix(in srgb, var(--c-action) 80%, transparent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
       letter-spacing: 0.02em;
     }
 
     /* Maker footer */
     .maker {
-      margin-top: 20px; font-size: 0.875rem;
-      color: var(--text-tertiary); text-align: center;
-      opacity: 0; animation: fadeIn 0.8s 1s ease forwards;
+      margin-top: 20px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.8s 1s ease forwards;
     }
-    .maker a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s ease; }
-    .maker a:hover { color: var(--text-primary); }
-    @keyframes fadeIn { to { opacity: 1; } }
+
+    .maker a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .maker a:hover {
+      color: var(--text-primary);
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
 
     /* Status (load/error) */
-    .status { margin-top: 6px; font-size: 0.85rem; color: var(--text-tertiary); text-align: center; min-height: 1.2em; }
+    .status {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-align: center;
+      min-height: 1.2em;
+    }
 
     /* Responsive adjustments */
     @media (min-width: 768px) {
-      .container { max-width: 480px; }
-      .glass-card { padding: 40px 32px; }
-      .button { padding: 18px 24px; }
+      .container {
+        max-width: 800px;
+      }
+
+      .glass-card {
+        padding: 40px 32px;
+      }
+
+      .button {
+        padding: 18px 24px;
+      }
     }
+
     @media (max-width: 480px) {
-      .glass-card { padding: 24px 20px; }
-      .button { padding: 14px 20px; }
+      .glass-card {
+        padding: 24px 20px;
+      }
+
+      .button {
+        padding: 14px 20px;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .button.full-width {
+        grid-column: span 1;
+      }
+
+      /* Mobile theme switcher position */
+      .theme-switcher {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        padding: 6px;
+      }
+
+      .theme-switcher__option {
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Theme Switcher -->
+  <fieldset class="theme-switcher">
+    <legend class="theme-switcher__legend">Choose theme</legend>
+    <label class="theme-switcher__option">
+      <input class="theme-switcher__input" type="radio" name="theme" value="light" checked />
+      <svg class="theme-switcher__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
+        <path fill="var(--c)" fill-rule="evenodd" d="M18 12a6 6 0 1 1 0 12 6 6 0 0 1 0-12Zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z" clip-rule="evenodd" />
+        <path fill="var(--c)" d="M17 6.038a1 1 0 1 1 2 0v3a1 1 0 0 1-2 0v-3ZM24.244 7.742a1 1 0 1 1 1.618 1.176L24.1 11.345a1 1 0 1 1-1.618-1.176l1.763-2.427ZM29.104 13.379a1 1 0 0 1 .618 1.902l-2.854.927a1 1 0 1 1-.618-1.902l2.854-.927ZM29.722 20.795a1 1 0 0 1-.619 1.902l-2.853-.927a1 1 0 1 1 .618-1.902l2.854.927ZM25.862 27.159a1 1 0 0 1-1.618 1.175l-1.763-2.427a1 1 0 1 1 1.618-1.175l1.763 2.427ZM19 30.038a1 1 0 0 1-2 0v-3a1 1 0 1 1 2 0v3ZM11.755 28.334a1 1 0 0 1-1.618-1.175l1.764-2.427a1 1 0 1 1 1.618 1.175l-1.764 2.427ZM6.896 22.697a1 1 0 1 1-.618-1.902l2.853-.927a1 1 0 1 1 .618 1.902l-2.853.927ZM6.278 15.28a1 1 0 1 1 .618-1.901l2.853.927a1 1 0 1 1-.618 1.902l-2.853-.927ZM10.137 8.918a1 1 0 0 1 1.618-1.176l1.764 2.427a1 1 0 0 1-1.618 1.176l-1.764-2.427Z" />
+      </svg>
+    </label>
+    <label class="theme-switcher__option">
+      <input class="theme-switcher__input" type="radio" name="theme" value="dark" />
+      <svg class="theme-switcher__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
+        <path fill="var(--c)" d="M12.5 8.473a10.968 10.968 0 0 1 8.785-.97 7.435 7.435 0 0 0-3.737 4.672l-.09.373A7.454 7.454 0 0 0 28.732 20.4a10.97 10.97 0 0 1-5.232 7.125l-.497.27c-5.014 2.566-11.175.916-14.234-3.813l-.295-.483C5.53 18.403 7.13 11.93 12.017 8.77l.483-.297Zm4.234.616a8.946 8.946 0 0 0-2.805.883l-.429.234A9 9 0 0 0 10.206 22.5l.241.395A9 9 0 0 0 22.5 25.794l.416-.255a8.94 8.94 0 0 0 2.167-1.99 9.433 9.433 0 0 1-2.782-.313c-5.043-1.352-8.036-6.535-6.686-11.578l.147-.491c.242-.745.573-1.44.972-2.078Z" />
+      </svg>
+    </label>
+  </fieldset>
+
   <div class="container">
     <div class="glass-card">
       <div class="logo" aria-hidden="true">
         <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-          <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2Zm9 7V7L15 5.5V7H9V5.5L3 7v2L9 10.5V12L5 13v2l4-1.5V15h6v-1.5l6 1.5v-2l-6-1.5v-1L21 9Z"/>
+          <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2Zm9 7V7L15 5.5V7H9V5.5L3 7v2L9 10.5V12L5 13v2l6 1.5v-2l-6-1.5v-1L21 9Z"/>
         </svg>
       </div>
 
@@ -224,8 +734,15 @@
     const REPLACE_LOCAL_LINKS = true;
 
     // Local defaults (used if external file fails)
-    const SITE = { title: "Link Center", subtitle: "All my links in one place" };
-    const MAKER = { name: "YourName", url: "https://your.site" };
+    const SITE = { 
+      title: "Link Center", 
+      subtitle: "All my links in one place" 
+    };
+    
+    const MAKER = { 
+      name: "YourName", 
+      url: "https://your.site" 
+    };
 
     const LINKS = [
       { label: "Telegram", href: "https://t.me/...", icon: "paper-plane", tag: "Popular" },
@@ -292,7 +809,15 @@
     function renderButtons(linkArray) {
       const c = document.getElementById('buttons-container');
       clearButtons();
+      
+      // Add buttons to container
       linkArray.forEach((lnk, i) => c.appendChild(createButton(lnk, i)));
+      
+      // Handle grid layout for odd number of links
+      if (linkArray.length % 2 === 1 && linkArray.length > 1) {
+        const lastButton = c.lastChild;
+        lastButton.classList.add('full-width');
+      }
     }
 
     function applySiteMeta(meta) {
@@ -354,29 +879,88 @@
     }
 
     async function loadExternalTxt(url) {
-      setStatus('Loading links…');
-      try {
-        const res = await fetch(url, { cache: 'no-store' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const txt = await res.text();
-        const { meta, items } = parseLinksTxt(txt);
-
-        applySiteMeta(meta);
-
-        const finalLinks = REPLACE_LOCAL_LINKS ? items : [...LINKS, ...items];
-        renderButtons(finalLinks);
-        setStatus('');
-      } catch (err) {
-        console.warn('External links load failed:', err);
-        setStatus('Could not load external links. Using local defaults.');
-        renderButtons(LINKS);
+      setStatus('Loading links...');
+      
+      // Try multiple approaches for better compatibility
+      const methods = [
+        // Method 1: XMLHttpRequest (best for local file access)
+        () => new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', url, true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+              if (xhr.status === 0 || xhr.status === 200) {
+                resolve(xhr.responseText);
+              } else {
+                reject(new Error(`HTTP ${xhr.status}`));
+              }
+            }
+          };
+          xhr.onerror = () => reject(new Error('Network error'));
+          xhr.send();
+        }),
+        
+        // Method 2: Standard fetch
+        async () => {
+          const res = await fetch(url, { cache: 'no-store' });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return await res.text();
+        },
+        
+        // Method 3: Fetch with no-cors
+        async () => {
+          const res = await fetch(url, { cache: 'no-store', mode: 'no-cors' });
+          return await res.text();
+        }
+      ];
+      
+      // Try each method until one succeeds
+      for (const method of methods) {
+        try {
+          const txt = await method();
+          if (txt && txt.trim().length > 0) {
+            const { meta, items } = parseLinksTxt(txt);
+            
+            // Apply site metadata
+            applySiteMeta(meta);
+            
+            // Render links
+            const finalLinks = REPLACE_LOCAL_LINKS ? items : [...LINKS, ...items];
+            renderButtons(finalLinks);
+            
+            setStatus('');
+            return;
+          }
+        } catch (err) {
+          console.warn('Method failed:', err);
+          continue;
+        }
       }
+      
+      // If all methods fail, use local defaults
+      console.warn('Could not load external links. Using local defaults.');
+      setStatus('Could not load external links. Using local defaults.');
+      renderButtons(LINKS);
     }
 
     /**********************
-     * INIT
+     * Theme Switching
      **********************/
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme switcher functionality
+      const themeSwitcher = document.querySelector('.theme-switcher');
+      const radios = themeSwitcher.querySelectorAll('input[type="radio"]');
+
+      radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.value === 'dark') {
+            document.body.classList.add('dark-theme');
+          } else {
+            document.body.classList.remove('dark-theme');
+          }
+        });
+      });
+
       // Initial local meta (in case external file fails)
       document.getElementById('title').textContent = SITE.title;
       document.getElementById('subtitle').textContent = SITE.subtitle;
