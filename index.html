@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,9 +20,15 @@
       --site-title: "Link Center";
       --site-subtitle: "";
       --maker-name: "AM!R";
-      --maker-url: "  https://t.me/iwana_to_be  ";
-      --background-image: none; /* e.g., url('https://example.com/bg.jpg  ') */
-      --background-color: #f0f0f0;
+      --maker-url: "https://t.me/iwana_to_be";
+
+      /* Background variables */
+      --background-image-light: url(./LIGHT-BP.jpg); /* e.g., url('https://example.com/light-bg.jpg') */
+      --background-image-dark: url(./DARK-BP.jpg);  /* e.g., url('https://example.com/dark-bg.jpg') */
+      --background-repeat: repeat;    /* How the background image repeats: repeat, repeat-x, repeat-y, no-repeat */
+      --background-position: top left; /* Position of the background image */
+      --background-size: 500px;       /* Size of the background image */
+
       --text-primary: #224;
       --text-secondary: #666666;
 
@@ -39,7 +44,7 @@
       --c-dark: #000;
       --c-content: #224;
       --c-action: #0052f5;
-      --c-bg: var(--background-color);
+      --c-bg: var(--background-image-light, #f0f0f0); /* Use image if provided, else fallback color */
       --glass-reflex-dark: 1;
       --glass-reflex-light: 1;
       --saturation: 150%;
@@ -47,8 +52,8 @@
       --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       --accent: var(--c-action);
       /* Default light mode text colors */
-      --text-primary: #ffffff; /* White for primary text */
-      --text-secondary: #e0e0e0; /* Light grey for secondary text */
+      --text-primary: #224; /* Dark for primary text in light mode */
+      --text-secondary: #666666; /* Dark grey for secondary text in light mode */
       --bg-pattern-color: #000000; /* Black pattern for light mode */
       --bg-pattern-opacity: var(--pattern-density-light);
     }
@@ -60,7 +65,7 @@
       --c-dark: #000;
       --c-content: #e1e1e1;
       --c-action: #4d9eff;
-      --c-bg: #121212;
+      --c-bg: var(--background-image-dark, #121212); /* Use image if provided, else fallback color */
       --glass-reflex-dark: 2;
       --glass-reflex-light: 0.3;
       --saturation: 150%;
@@ -85,13 +90,9 @@
       padding: 20px;
       transition: background 400ms cubic-bezier(1, 0, 0.4, 1),
         color 400ms cubic-bezier(1, 0, 0.4, 1);
-      background-image: var(--background-image), 
-                        radial-gradient(circle at 10% 20%, 
-                                         rgba(var(--bg-pattern-color-rgb), var(--bg-pattern-opacity)) 0.5%, 
-                                         transparent 1.2%);
-      background-repeat: repeat;
-      background-position: top left;
-      background-size: 500px, 100px; /* Original pattern, then new radial pattern */
+      background-repeat: var(--background-repeat);
+      background-position: var(--background-position);
+      background-size: var(--background-size);
     }
 
     /* Define RGB values for the pattern color */
@@ -264,9 +265,9 @@
     /* Liquid Glass Card */
     .glass-card {
       width: 100%;
-      background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-      backdrop-filter: blur(25px) saturate(var(--saturation));
-      -webkit-backdrop-filter: blur(25px) saturate(var(--saturation));
+      background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
       border-radius: var(--border-radius);
       padding: 32px 24px;
       display: flex;
@@ -382,6 +383,10 @@
       to {
         transform: scale(1);
       }
+    }
+
+    body.dark-theme .logo {
+      background: transparent !important;
     }
 
     /* Text content */
@@ -711,17 +716,32 @@
         grid-column: span 1;
       }
 
-      /* Mobile theme switcher position - Keep it inside the card */
+      /* Mobile theme switcher position - Positioned absolutely, next to logo */
       .theme-switcher {
-        position: static; /* Reset absolute positioning */
+        position: absolute; /* Use absolute positioning on mobile too */
+        top: 12px; /* Align with logo */
+        right: 12px; /* Align with logo */
         align-self: flex-end; /* Align switcher to the right within the card */
-        width: 100%;
+        width: auto; /* Let it size based on content */
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 10px; /* Add space below the switcher */
-        margin-top: 10px; /* Add space above the switcher from the logo */
+        margin-top: 0; /* Remove any top margin */
+        margin-bottom: 0; /* Remove any bottom margin */
       }
     }
+body {
+  background-image: url('LIGHT-BP.jpg');
+  background-size: 50px 50px;
+  background-repeat: repeat;
+  background-position: top left;
+}
+
+body.dark-theme {
+  background-image: url('DARK-BP.jpg');
+  background-size: 100px 100px;
+  background-repeat: repeat;
+  background-position: top left;
+}
   </style>
 </head>
 <body class="dark-theme">
